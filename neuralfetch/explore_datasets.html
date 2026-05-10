@@ -1,0 +1,988 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Sample Datasets" href="samples.html"><link rel="prev" title="Creating Your Own Study" href="auto_examples/03_create_new_study.html">
+
+    <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+        <title>Explore Brain Datasets - neuroai</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=2da93098" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d3dde5ab" />
+    <link rel="stylesheet" type="text/css" href="../_static/conf.css?v=b3eb38f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/neuralbench-results-table.css?v=56ba2820" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #ffffff;
+  --color-code-foreground: black;
+  --admonition-font-size: 100%;
+  --admonition-title-font-size: 100%;
+  --color-brand-primary: #448aff;
+  --color-brand-content: #448aff;
+  --color-admonition-title--note: #448aff;
+  --color-admonition-title-background--note: #448aff10;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #448aff;
+  --color-brand-content: #448aff;
+  --color-announcement-background: #935610;
+  --color-announcement-text: #FFFFFF;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #448aff;
+  --color-brand-content: #448aff;
+  --color-announcement-background: #935610;
+  --color-announcement-text: #FFFFFF;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">neuroai</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">neuroai</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../neuralset/index.html">NeuralSet</a><input aria-label="Toggle navigation of NeuralSet" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../neuralset/install.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../neuralset/code_builder.html">Examples</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralset/auto_examples/walkthrough/index.html">Tutorials</a><input aria-label="Toggle navigation of Tutorials" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/auto_examples/walkthrough/01_events.html">Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/auto_examples/walkthrough/02_studies.html">Studies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/auto_examples/walkthrough/03_transforms.html">Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/auto_examples/walkthrough/04_extractors.html">Extractors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/auto_examples/walkthrough/05_segmenter.html">Segmenter &amp; Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/auto_examples/walkthrough/06_chains.html">Chains</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../neuralset/caching_and_cluster.html">Caching &amp; Cluster Execution</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralset/reference/reference.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.base.BaseModel.html">neuralset.base.BaseModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.base.Step.html">neuralset.base.Step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.base.Chain.html">neuralset.base.Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.base.Frequency.html">neuralset.base.Frequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.base.TimedArray.html">neuralset.base.TimedArray</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.study.Study.html">neuralset.events.study.Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.study.SpecialLoader.html">neuralset.events.study.SpecialLoader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.study.StudyInfo.html">neuralset.events.study.StudyInfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Action.html">neuralset.events.etypes.Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Artifact.html">neuralset.events.etypes.Artifact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Audio.html">neuralset.events.etypes.Audio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Background.html">neuralset.events.etypes.Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.BaseDataEvent.html">neuralset.events.etypes.BaseDataEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.BaseSplittableEvent.html">neuralset.events.etypes.BaseSplittableEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.BaseText.html">neuralset.events.etypes.BaseText</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.CategoricalEvent.html">neuralset.events.etypes.CategoricalEvent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Eeg.html">neuralset.events.etypes.Eeg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Emg.html">neuralset.events.etypes.Emg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Event.html">neuralset.events.etypes.Event</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.EyeState.html">neuralset.events.etypes.EyeState</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Fmri.html">neuralset.events.etypes.Fmri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Fnirs.html">neuralset.events.etypes.Fnirs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Ieeg.html">neuralset.events.etypes.Ieeg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Image.html">neuralset.events.etypes.Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Keystroke.html">neuralset.events.etypes.Keystroke</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Meg.html">neuralset.events.etypes.Meg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.MneRaw.html">neuralset.events.etypes.MneRaw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Phoneme.html">neuralset.events.etypes.Phoneme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Seizure.html">neuralset.events.etypes.Seizure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Sentence.html">neuralset.events.etypes.Sentence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.SleepStage.html">neuralset.events.etypes.SleepStage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Spikes.html">neuralset.events.etypes.Spikes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Stimulus.html">neuralset.events.etypes.Stimulus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Text.html">neuralset.events.etypes.Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Video.html">neuralset.events.etypes.Video</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.etypes.Word.html">neuralset.events.etypes.Word</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.basic.AlignEvents.html">neuralset.events.transforms.basic.AlignEvents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.basic.ConfigureEventLoader.html">neuralset.events.transforms.basic.ConfigureEventLoader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.basic.CreateColumn.html">neuralset.events.transforms.basic.CreateColumn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.basic.QueryEvents.html">neuralset.events.transforms.basic.QueryEvents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.basic.RemoveMissing.html">neuralset.events.transforms.basic.RemoveMissing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.basic.SelectIdx.html">neuralset.events.transforms.basic.SelectIdx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.text.EnsureTexts.html">neuralset.events.transforms.text.EnsureTexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.text.AddConcatenationContext.html">neuralset.events.transforms.text.AddConcatenationContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.text.AddContextToWords.html">neuralset.events.transforms.text.AddContextToWords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.text.AddPartOfSpeech.html">neuralset.events.transforms.text.AddPartOfSpeech</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.text.AddPhonemes.html">neuralset.events.transforms.text.AddPhonemes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.text.AddSentenceToWords.html">neuralset.events.transforms.text.AddSentenceToWords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.text.AddSummary.html">neuralset.events.transforms.text.AddSummary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.splitting.AssignKSplits.html">neuralset.events.transforms.splitting.AssignKSplits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.splitting.AssignSentenceSplit.html">neuralset.events.transforms.splitting.AssignSentenceSplit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.splitting.AssignWordSplitAndContext.html">neuralset.events.transforms.splitting.AssignWordSplitAndContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.splitting.SklearnSplit.html">neuralset.events.transforms.splitting.SklearnSplit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.audio.ExtractAudioFromVideo.html">neuralset.events.transforms.audio.ExtractAudioFromVideo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.chunking.ChunkEvents.html">neuralset.events.transforms.chunking.ChunkEvents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.base.BaseExtractor.html">neuralset.extractors.base.BaseExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.base.BaseStatic.html">neuralset.extractors.base.BaseStatic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.base.EventDetector.html">neuralset.extractors.base.EventDetector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.base.EventField.html">neuralset.extractors.base.EventField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.base.LabelEncoder.html">neuralset.extractors.base.LabelEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.base.Pulse.html">neuralset.extractors.base.Pulse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.ChannelPositions.html">neuralset.extractors.neuro.ChannelPositions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.EegExtractor.html">neuralset.extractors.neuro.EegExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.EmgExtractor.html">neuralset.extractors.neuro.EmgExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.FmriExtractor.html">neuralset.extractors.neuro.FmriExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.FnirsExtractor.html">neuralset.extractors.neuro.FnirsExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.HrfConvolve.html">neuralset.extractors.neuro.HrfConvolve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.IeegExtractor.html">neuralset.extractors.neuro.IeegExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.MegExtractor.html">neuralset.extractors.neuro.MegExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.MneRaw.html">neuralset.extractors.neuro.MneRaw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.neuro.SpikesExtractor.html">neuralset.extractors.neuro.SpikesExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.HuggingFaceAudio.html">neuralset.extractors.audio.HuggingFaceAudio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.MelSpectrum.html">neuralset.extractors.audio.MelSpectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.SeamlessM4T.html">neuralset.extractors.audio.SeamlessM4T</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.SonarAudio.html">neuralset.extractors.audio.SonarAudio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.SpeechEnvelope.html">neuralset.extractors.audio.SpeechEnvelope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.Wav2Vec.html">neuralset.extractors.audio.Wav2Vec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.Wav2VecBert.html">neuralset.extractors.audio.Wav2VecBert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.audio.Whisper.html">neuralset.extractors.audio.Whisper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.text.HuggingFaceText.html">neuralset.extractors.text.HuggingFaceText</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.text.SentenceTransformer.html">neuralset.extractors.text.SentenceTransformer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.text.SonarEmbedding.html">neuralset.extractors.text.SonarEmbedding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.text.SpacyEmbedding.html">neuralset.extractors.text.SpacyEmbedding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.text.TfidfEmbedding.html">neuralset.extractors.text.TfidfEmbedding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.text.WordFrequency.html">neuralset.extractors.text.WordFrequency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.text.WordLength.html">neuralset.extractors.text.WordLength</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.image.ColorHistogram.html">neuralset.extractors.image.ColorHistogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.image.HOG.html">neuralset.extractors.image.HOG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.image.HuggingFaceImage.html">neuralset.extractors.image.HuggingFaceImage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.image.LBP.html">neuralset.extractors.image.LBP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.image.RFFT2D.html">neuralset.extractors.image.RFFT2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.video.HuggingFaceVideo.html">neuralset.extractors.video.HuggingFaceVideo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.meta.AggregatedExtractor.html">neuralset.extractors.meta.AggregatedExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.meta.CroppedExtractor.html">neuralset.extractors.meta.CroppedExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.meta.ExtractorPCA.html">neuralset.extractors.meta.ExtractorPCA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.meta.HuggingFacePCA.html">neuralset.extractors.meta.HuggingFacePCA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.meta.TimeAggregatedExtractor.html">neuralset.extractors.meta.TimeAggregatedExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.extractors.meta.ToStatic.html">neuralset.extractors.meta.ToStatic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.segments.Segment.html">neuralset.segments.Segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.dataloader.Segmenter.html">neuralset.dataloader.Segmenter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.dataloader.SegmentDataset.html">neuralset.dataloader.SegmentDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.dataloader.Batch.html">neuralset.dataloader.Batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.utils.DeterministicSplitter.html">neuralset.events.transforms.utils.DeterministicSplitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.utils.chunk_events.html">neuralset.events.transforms.utils.chunk_events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralset/reference/generated/neuralset.events.transforms.splitting.SimilaritySplitter.html">neuralset.events.transforms.splitting.SimilaritySplitter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../neuralset/philosophy.html">Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../neuralset/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../neuralset/extending/contributing.html">Contributing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">NeuralFetch</a><input aria-label="Toggle navigation of NeuralFetch" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="auto_examples/index.html">Tutorials</a><input aria-label="Toggle navigation of Tutorials" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="auto_examples/01_plot_fetch_first_study.html">Fetch Your First Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_examples/02_plot_study_anatomy.html">Anatomy of a Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_examples/03_create_new_study.html">Creating Your Own Study</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Explore Brain Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="samples.html">Sample Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing: New Studies</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/reference.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.BaseDownload.html">neuralfetch.download.BaseDownload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Dandi.html">neuralfetch.download.Dandi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Eegdash.html">neuralfetch.download.Eegdash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Datalad.html">neuralfetch.download.Datalad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Donders.html">neuralfetch.download.Donders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Dryad.html">neuralfetch.download.Dryad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Figshare.html">neuralfetch.download.Figshare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Huggingface.html">neuralfetch.download.Huggingface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Openneuro.html">neuralfetch.download.Openneuro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Osf.html">neuralfetch.download.Osf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Physionet.html">neuralfetch.download.Physionet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Synapse.html">neuralfetch.download.Synapse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.download.Zenodo.html">neuralfetch.download.Zenodo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.utils.compute_study_info.html">neuralfetch.utils.compute_study_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.utils.update_source_info.html">neuralfetch.utils.update_source_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/generated/neuralfetch.utils.root_study_folder.html">neuralfetch.utils.root_study_folder</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../neuraltrain/index.html">NeuralTrain</a><input aria-label="Toggle navigation of NeuralTrain" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../neuraltrain/install.html">Installation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuraltrain/tutorials.html">Tutorials</a><input aria-label="Toggle navigation of Tutorials" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/auto_examples/data/01_data.html">Data Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/auto_examples/models/02_models.html">Model Configs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/auto_examples/objectives/03_objectives.html">Metrics and Optimisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/auto_examples/trainer/04_trainer.html">Trainer and Experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../neuraltrain/project_example.html">Project Example</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuraltrain/reference/reference.html">API</a><input aria-label="Toggle navigation of API" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.base.BaseModelConfig.html">neuraltrain.models.base.BaseModelConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.losses.base.BaseLoss.html">neuraltrain.losses.base.BaseLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.losses.base.BaseTorchLoss.html">neuraltrain.losses.base.BaseTorchLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.base.BaseMetric.html">neuraltrain.metrics.base.BaseMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.base.BaseTorchMetric.html">neuraltrain.metrics.base.BaseTorchMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.optimizers.base.BaseOptimizer.html">neuraltrain.optimizers.base.BaseOptimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.optimizers.base.LightningOptimizer.html">neuraltrain.optimizers.base.LightningOptimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.optimizers.base.BaseTorchOptimizer.html">neuraltrain.optimizers.base.BaseTorchOptimizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.optimizers.base.BaseLRScheduler.html">neuraltrain.optimizers.base.BaseLRScheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.optimizers.base.BaseTorchLRScheduler.html">neuraltrain.optimizers.base.BaseTorchLRScheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.base.BaseBrainDecodeModel.html">neuraltrain.models.base.BaseBrainDecodeModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.simpleconv.SimpleConv.html">neuraltrain.models.simpleconv.SimpleConv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.simpleconv.SimpleConvModel.html">neuraltrain.models.simpleconv.SimpleConvModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.simpleconv.SimpleConvTimeAgg.html">neuraltrain.models.simpleconv.SimpleConvTimeAgg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.simpleconv.SimpleConvTimeAggModel.html">neuraltrain.models.simpleconv.SimpleConvTimeAggModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.simplerconv.SimplerConv.html">neuraltrain.models.simplerconv.SimplerConv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.simplerconv.SimplerConvModel.html">neuraltrain.models.simplerconv.SimplerConvModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.transformer.TransformerEncoder.html">neuraltrain.models.transformer.TransformerEncoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.conv_transformer.ConvTransformer.html">neuraltrain.models.conv_transformer.ConvTransformer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.conv_transformer.ConvTransformerModel.html">neuraltrain.models.conv_transformer.ConvTransformerModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.conformer.Conformer.html">neuraltrain.models.conformer.Conformer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.linear.Linear.html">neuraltrain.models.linear.Linear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.linear.LinearModel.html">neuraltrain.models.linear.LinearModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.dummy_predictor.DummyPredictor.html">neuraltrain.models.dummy_predictor.DummyPredictor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.dummy_predictor.DummyPredictorModel.html">neuraltrain.models.dummy_predictor.DummyPredictorModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.fmri_mlp.FmriMlp.html">neuraltrain.models.fmri_mlp.FmriMlp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.fmri_mlp.FmriMlpModel.html">neuraltrain.models.fmri_mlp.FmriMlpModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.fmri_mlp.FmriLinear.html">neuraltrain.models.fmri_mlp.FmriLinear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.fmri_mlp.FmriLinearModel.html">neuraltrain.models.fmri_mlp.FmriLinearModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.reve.NtReve.html">neuraltrain.models.reve.NtReve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.luna.NtLuna.html">neuraltrain.models.luna.NtLuna</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.labram.NtLabram.html">neuraltrain.models.labram.NtLabram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.freqbandnet.FreqBandNet.html">neuraltrain.models.freqbandnet.FreqBandNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.freqbandnet.FreqBandNetModel.html">neuraltrain.models.freqbandnet.FreqBandNetModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.green.Green.html">neuraltrain.models.green.Green</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.diffusion_prior.DiffusionPrior.html">neuraltrain.models.diffusion_prior.DiffusionPrior</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.preprocessor.OnTheFlyPreprocessor.html">neuraltrain.models.preprocessor.OnTheFlyPreprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.preprocessor.OnTheFlyPreprocessorModel.html">neuraltrain.models.preprocessor.OnTheFlyPreprocessorModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.SubjectLayers.html">neuraltrain.models.common.SubjectLayers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.FourierEmb.html">neuraltrain.models.common.FourierEmb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.ChannelMerger.html">neuraltrain.models.common.ChannelMerger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.Mlp.html">neuraltrain.models.common.Mlp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.TemporalDownsampling.html">neuraltrain.models.common.TemporalDownsampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.LayerScale.html">neuraltrain.models.common.LayerScale</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.NormDenormScaler.html">neuraltrain.models.common.NormDenormScaler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.ChannelDropout.html">neuraltrain.models.common.ChannelDropout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.models.common.BahdanauAttention.html">neuraltrain.models.common.BahdanauAttention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.losses.losses.MultiLoss.html">neuraltrain.losses.losses.MultiLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.losses.losses.ClipLoss.html">neuraltrain.losses.losses.ClipLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.losses.losses.SigLipLoss.html">neuraltrain.losses.losses.SigLipLoss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.metrics.OnlinePearsonCorr.html">neuraltrain.metrics.metrics.OnlinePearsonCorr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.metrics.Rank.html">neuraltrain.metrics.metrics.Rank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.metrics.TopkAcc.html">neuraltrain.metrics.metrics.TopkAcc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.metrics.TopkAccFromScores.html">neuraltrain.metrics.metrics.TopkAccFromScores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.metrics.ImageSimilarity.html">neuraltrain.metrics.metrics.ImageSimilarity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.metrics.metrics.GroupedMetric.html">neuraltrain.metrics.metrics.GroupedMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.TrivialBrainAugment.html">neuraltrain.augmentations.augmentations.TrivialBrainAugment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.TrivialBrainAugmentConfig.html">neuraltrain.augmentations.augmentations.TrivialBrainAugmentConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.BandstopFilterFFT.html">neuraltrain.augmentations.augmentations.BandstopFilterFFT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.BandstopFilterFFTConfig.html">neuraltrain.augmentations.augmentations.BandstopFilterFFTConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.ChannelsDropoutConfig.html">neuraltrain.augmentations.augmentations.ChannelsDropoutConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.FrequencyShiftConfig.html">neuraltrain.augmentations.augmentations.FrequencyShiftConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.GaussianNoiseConfig.html">neuraltrain.augmentations.augmentations.GaussianNoiseConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.augmentations.augmentations.SmoothTimeMaskConfig.html">neuraltrain.augmentations.augmentations.SmoothTimeMaskConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.run_grid.html">neuraltrain.utils.run_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.CsvLoggerConfig.html">neuraltrain.utils.CsvLoggerConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.WandbLoggerConfig.html">neuraltrain.utils.WandbLoggerConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.WandbInfra.html">neuraltrain.utils.WandbInfra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.BaseExperiment.html">neuraltrain.utils.BaseExperiment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.StandardScaler.html">neuraltrain.utils.StandardScaler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.TimedIterator.html">neuraltrain.utils.TimedIterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuraltrain/reference/generated/neuraltrain.utils.convert_to_pydantic.html">neuraltrain.utils.convert_to_pydantic</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../neuralbench/index.html">NeuralBench</a><input aria-label="Toggle navigation of NeuralBench" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../neuralbench/install.html">Installation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/auto_examples/quickstart/index.html">Quickstart</a><input aria-label="Toggle navigation of Quickstart" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/auto_examples/quickstart/01_run_first_task.html">Running Your First Benchmark Task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/auto_examples/quickstart/02_using_python_api.html">Using the Python API</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/auto_examples/results/index.html">Visualizing Results</a><input aria-label="Toggle navigation of Visualizing Results" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/auto_examples/results/plot_visualize_results.html">Visualizing Benchmark Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/auto_examples/adding_task/index.html">Adding a New Task</a><input aria-label="Toggle navigation of Adding a New Task" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/auto_examples/adding_task/create_new_task.html">Adding a New Downstream Task</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/auto_examples/adding_model/index.html">Adding a New Model</a><input aria-label="Toggle navigation of Adding a New Model" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/auto_examples/adding_model/create_new_model.html">Adding a New Model</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/auto_examples/advanced/index.html">Advanced</a><input aria-label="Toggle navigation of Advanced" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/auto_examples/advanced/modify_training_loop.html">Modifying the Training Loop</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/auto_examples/eeg_challenge/index.html">EEG Foundation Challenge 2025 @NeurIPS</a><input aria-label="Toggle navigation of EEG Foundation Challenge 2025 @NeurIPS" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/auto_examples/eeg_challenge/plot_eeg_challenge_2025.html">Reproducing tasks from the EEG Foundation Challenge 2025</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../neuralbench/full_benchmark.html">Running the full EEG benchmark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/api.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.main.Data.html">neuralbench.main.Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.main.Experiment.html">neuralbench.main.Experiment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.main.BenchmarkAggregator.html">neuralbench.main.BenchmarkAggregator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.pl_module.BrainModule.html">neuralbench.pl_module.BrainModule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.cli.run_benchmark.html">neuralbench.cli.run_benchmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.cli.run_benchmark_cli.html">neuralbench.cli.run_benchmark_cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.TextPreprocessor.html">neuralbench.transforms.TextPreprocessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.SklearnSplit.html">neuralbench.transforms.SklearnSplit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.SimilaritySplit.html">neuralbench.transforms.SimilaritySplit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.PredefinedSplit.html">neuralbench.transforms.PredefinedSplit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.CropSleepRecordings.html">neuralbench.transforms.CropSleepRecordings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.CropTimelines.html">neuralbench.transforms.CropTimelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.AddDefaultEvents.html">neuralbench.transforms.AddDefaultEvents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.transforms.OffsetEvents.html">neuralbench.transforms.OffsetEvents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.callbacks.TestFullRetrievalMetrics.html">neuralbench.callbacks.TestFullRetrievalMetrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.callbacks.RecordingLevelEval.html">neuralbench.callbacks.RecordingLevelEval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.callbacks.PlotConfusionMatrix.html">neuralbench.callbacks.PlotConfusionMatrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.callbacks.PlotRegressionVectors.html">neuralbench.callbacks.PlotRegressionVectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.callbacks.plot_confusion_matrix.html">neuralbench.callbacks.plot_confusion_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.utils.TrainerConfig.html">neuralbench.utils.TrainerConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.utils.load_checkpoint.html">neuralbench.utils.load_checkpoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.utils.compute_class_weights_from_dataset.html">neuralbench.utils.compute_class_weights_from_dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.utils.make_weighted_sampler.html">neuralbench.utils.make_weighted_sampler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.modules.DownstreamWrapper.html">neuralbench.modules.DownstreamWrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.modules.DownstreamWrapperModel.html">neuralbench.modules.DownstreamWrapperModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.config_manager.setup_config.html">neuralbench.config_manager.setup_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.config_manager.load_config.html">neuralbench.config_manager.load_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/generated/neuralbench.config_manager.get_config.html">neuralbench.config_manager.get_config</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/tasks/tasks.html">Downstream tasks</a><input aria-label="Toggle navigation of Downstream tasks" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/age.html">Age regression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/artifact.html">Artifact classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/audiovisual_stimulus.html">Audiovisual stimulus classification (MNE sample dataset)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/clinical_event.html">Clinical event detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/cvep.html">Code-modulated visually evoked potential (c-VEP) classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/dementia_diagnosis.html">Alzheimer’s disease and dementia classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/depression_diagnosis.html">Depression diagnosis classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/emotion.html">Emotion classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/ern.html">Error related-negativity (ERN) classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/image.html">Image decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/lrp.html">Lateralized readiness potential (LRP) classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/mental_arithmetic.html">Mental arithmetic detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/mental_imagery.html">Mental imagery classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/mental_workload.html">Mental Workload Classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/mismatch_negativity.html">Mismatch negativity (MMN) classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/motor_execution.html">Motor execution classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/motor_imagery.html">Motor imagery classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/n170.html">N170 face perception classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/n2pc.html">N2pc attention classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/n400.html">N400 semantic processing classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/p3.html">P3 classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/parkinsons_diagnosis.html">Parkinson’s disease diagnosis classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/pathology.html">Pathology detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/psychopathology.html">Psychopathology prediction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/reaction_time.html">Reaction time prediction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/schizophrenia_diagnosis.html">Schizophrenia diagnosis classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/seizure.html">Seizure detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/sentence.html">Sentence decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/sex.html">Sex regression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/sleep_arousal.html">Sleep arousal detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/sleep_stage.html">Sleep stage classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/speech.html">Speech decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/ssvep.html">Steady-state visually evoked potential (SSVEP) classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/typing.html">Typing decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/video.html">Video decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/eeg/word.html">Word decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/meg/image.html">Image decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/meg/typing.html">Typing decoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/tasks/fmri/image.html">Image decoding</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../neuralbench/models/models.html">Models</a><input aria-label="Toggle navigation of Models" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/models/bendr.html">BENDR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/models/biot.html">BIOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/models/cbramod.html">CBraMod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/models/labram.html">LaBraM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/models/luna.html">LUNA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../neuralbench/models/reve.html">REVE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://facebookresearch.github.io/exca/">Exca</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/facebookresearch/neuroai/blob/main/docs/neuralfetch/explore_datasets.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/facebookresearch/neuroai/edit/main/docs/neuralfetch/explore_datasets.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="explore-brain-datasets">
+<h1>Explore Brain Datasets<a class="headerlink" href="#explore-brain-datasets" title="Link to this heading">¶</a></h1>
+<p>Browse all brain datasets accessible through NeuralFetch. Filter by modality
+and click column headers to sort. Datasets with a <strong>▶ sample</strong> badge have
+a ready-to-run lightweight version — see <a class="reference internal" href="samples.html"><span class="doc">Sample Datasets</span></a>.</p>
+<!-- Auto-generated from neuralfetch.Study.catalog(); hand-edits will be
+     clobbered on regeneration. -->
+<script>
+window.EXPLORE_DATASETS = [
+  {"name": "Acqualagna2013Gaze", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "BNCI2015_010", "description": "EEG recordings (63-ch) in 12 healthy participants while attending to target letters in a rapid serial visual presentation (RSVP) P300 speller.", "sample": null},
+  {"name": "Albrecht2019Increased", "modality": "eeg", "subjects": 77, "total_hours": null, "aliases": "", "description": "EEG recordings (64-channel, 1000 Hz) from 77 participants (46 healthy controls, 31 with schizophrenia) performing a reinforcement learning Simon task.", "sample": null},
+  {"name": "Allen2022Massive", "modality": "fmri", "subjects": 8, "total_hours": 180, "aliases": "NSD", "description": "Natural Scenes Dataset: 7T BOLD fMRI from 8 participants viewing 73,000 natural images from Microsoft COCO dataset", "sample": "Allen2022MassiveSample"},
+  {"name": "Arico2014Influence", "modality": "eeg", "subjects": 10, "total_hours": null, "aliases": "BNCI2014_009", "description": "EEG recordings (16-ch) in 10 healthy participants while performing a P300 speller task using row-column (6x6 matrix) and GeoSpell (hexagonal) paradigms.", "sample": null},
+  {"name": "Barachant2012Robust", "modality": "eeg", "subjects": 8, "total_hours": null, "aliases": "AlexMI", "description": "EEG recordings (22-ch) in 8 participants while performing left-hand, right-hand, and feet motor imagery for asynchronous BCI control.", "sample": null},
+  {"name": "Bel2026PetitListen", "modality": "meg", "subjects": 58, "total_hours": 87, "aliases": "LPP-Listen", "description": "MEG recordings from 58 participants listening to Le Petit Prince in French.", "sample": "Bel2026PetitListenSample"},
+  {"name": "Bel2026PetitRead", "modality": "meg", "subjects": 50, "total_hours": 87, "aliases": "LPP-Read", "description": "MEG recordings from 50 participants reading Le Petit Prince in French.", "sample": "Bel2026PetitReadSample"},
+  {"name": "Brennan2019Hierarchical", "modality": "eeg", "subjects": 33, "total_hours": null, "aliases": "", "description": "EEG recordings from 33 participants listening to 12 min of an audiobook (\"Alice in Wonderland\").", "sample": null},
+  {"name": "CabreraCastillos2023BurstCvep100", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "CastillosCVEP100", "description": "EEG recordings (32-ch) in 12 healthy participants while performing a 4-class code-modulated VEP (c-VEP) BCI task at 100 Hz.", "sample": null},
+  {"name": "CabreraCastillos2023BurstCvep40", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "CastillosCVEP40", "description": "EEG recordings (32-ch) in 12 healthy participants while performing a 4-class code-modulated VEP (c-VEP) BCI task at 40 Hz.", "sample": null},
+  {"name": "CabreraCastillos2023BurstVep100", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "CastillosBurstVEP100", "description": "EEG recordings (32-ch) in 12 healthy participants while performing a 4-class burst-VEP BCI task with 100 Hz visual stimulation.", "sample": null},
+  {"name": "CabreraCastillos2023BurstVep40", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "CastillosBurstVEP40", "description": "EEG recordings (32-ch) in 12 healthy participants while performing a 4-class burst-VEP BCI task with 40 Hz visual stimulation.", "sample": null},
+  {"name": "Cattan2018Eeg", "modality": "eeg", "subjects": 19, "total_hours": null, "aliases": "Rodrigues2017", "description": "EEG recordings (16-ch) in 19 healthy participants while alternating between eyes-closed and eyes-open resting-state conditions.", "sample": null},
+  {"name": "Cattan2019Dataset", "modality": "eeg", "subjects": 21, "total_hours": null, "aliases": "Cattan2019_VR", "description": "EEG recordings (16-ch) in 21 healthy participants while performing a P300 BCI spelling task in virtual reality with a 6x6 flashing symbol matrix.", "sample": null},
+  {"name": "Cattan2019Passive", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "Cattan2019_PHMD", "description": "EEG recordings (16-ch) in 12 healthy participants while passively listening to music wearing a head-mounted display at rest.", "sample": null},
+  {"name": "Chavarriaga2010Learning", "modality": "eeg", "subjects": 6, "total_hours": null, "aliases": "BNCI2015_013", "description": "EEG recordings (64-ch) in 6 healthy participants while monitoring an autonomous cursor for error-related potentials (ErrP) in a navigation task.", "sample": null},
+  {"name": "Chen2023Large", "modality": "eeg", "subjects": 123, "total_hours": null, "aliases": "Finer-grained Affective Computing EEG Dataset", "description": "EEG recordings for 123 participants while viewing 28 video clips targeting nine categories of emotion", "sample": null},
+  {"name": "Cho2017Supporting", "modality": "eeg", "subjects": 52, "total_hours": null, "aliases": "Cho2017", "description": "EEG recordings (64-ch) in 52 healthy participants while performing left- and right-hand motor imagery.", "sample": null},
+  {"name": "Crell2024Handwritten", "modality": "eeg", "subjects": 20, "total_hours": null, "aliases": "BNCI2024_001", "description": "EEG recordings (64-ch) in 20 healthy participants while performing handwritten character motor imagery of 10 letters using the right index finger.", "sample": null},
+  {"name": "Dan2023Bids", "modality": "eeg", "subjects": 23, "total_hours": null, "aliases": "CHB-MIT Scalp EEG Database", "description": "This database, collected at the Children's Hospital Boston, consists of EEG recordings from pediatric participants with intractable seizures. Participants were monitored for up to several days following withdrawal of anti-seizure medication in order to characterize their seizures and assess their candidacy for surgical intervention. The recordings are grouped into 23 cases and were collected from 22 participants (5 males, ages 3-22; and 17 females, ages 1.5-19).", "sample": null},
+  {"name": "Dornhege2004Boosting", "modality": "eeg", "subjects": 5, "total_hours": null, "aliases": "BNCI2003_004", "description": "EEG recordings (64-ch) in 5 healthy participants while performing right-hand and right-foot motor imagery.", "sample": null},
+  {"name": "Dreyer2023Large", "modality": "eeg", "subjects": 87, "total_hours": null, "aliases": "Dreyer2023", "description": "EEG recordings (27-ch) in 87 healthy participants while performing left- and right-hand motor imagery across multiple BCI sessions.", "sample": null},
+  {"name": "Dreyer2023LargeA", "modality": "eeg", "subjects": 60, "total_hours": null, "aliases": "Dreyer2023A", "description": "EEG recordings (5-ch) in 60 healthy participants while performing left- and right-hand motor imagery with visual feedback.", "sample": null},
+  {"name": "Dreyer2023LargeB", "modality": "eeg", "subjects": 21, "total_hours": null, "aliases": "Dreyer2023B", "description": "EEG recordings in 21 healthy participants while performing left- and right-hand motor imagery.", "sample": null},
+  {"name": "Dreyer2023LargeC", "modality": "eeg", "subjects": 6, "total_hours": null, "aliases": "Dreyer2023C", "description": "EEG recordings in 6 healthy participants while performing left- and right-hand motor imagery.", "sample": null},
+  {"name": "Faller2012Autocalibration", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "BNCI2015_001", "description": "EEG recordings (13-ch) in 12 healthy participants while performing sustained right-hand (palmar grasp) and feet (plantar extension) motor imagery.", "sample": null},
+  {"name": "Ghassemi2018You", "modality": "eeg", "subjects": 1983, "total_hours": null, "aliases": "PhysioNet/CinC Challenge 2018", "description": "A corpus of 1,985 EEG recordings from a sleep laboratory annotated for arousal and sleep stage.", "sample": null},
+  {"name": "Gifford2022Large", "modality": "eeg", "subjects": 10, "total_hours": 80, "aliases": "THINGS-EEG2", "description": "EEG recordings from 10 participants watching still images.", "sample": null},
+  {"name": "Grootswagers2022Human", "modality": "eeg", "subjects": 50, "total_hours": 95, "aliases": "THINGS-EEG1", "description": "EEG recordings from 50 participants watching still images.", "sample": "Grootswagers2022HumanSample"},
+  {"name": "GrosseWentrup2009Beamforming", "modality": "eeg", "subjects": 10, "total_hours": null, "aliases": "GrosseWentrup2009", "description": "EEG recordings (128-ch) in 10 healthy participants while performing left- and right-hand motor imagery.", "sample": null},
+  {"name": "Guger2009How", "modality": "eeg", "subjects": 10, "total_hours": null, "aliases": "BNCI2015_003", "description": "EEG recordings (56-ch) in 10 healthy participants while attending to auditory spatial cues from six directions in an AMUSE P300 speller paradigm.", "sample": null},
+  {"name": "Hamid2020Tuar", "modality": "eeg", "subjects": 213, "total_hours": null, "aliases": "TUAR", "description": "Subset of TUH EEG with artifact events", "sample": null},
+  {"name": "Harati2015Tuev", "modality": "eeg", "subjects": 370, "total_hours": null, "aliases": "TUEV", "description": "Subset of TUH EEG with annotations for epilepsy and artifact events", "sample": null},
+  {"name": "HaratiAbhishaike2015Tuev", "modality": "eeg", "subjects": 370, "total_hours": null, "aliases": "TUEV", "description": "Subset of TUH EEG with annotations for epilepsy and artifact events", "sample": null},
+  {"name": "Haufe2011Eeg", "modality": "eeg", "subjects": 15, "total_hours": null, "aliases": "BNCI2016_002", "description": "EEG recordings (64-ch) in 15 participants while driving a simulated vehicle at 100 km/h and responding to emergency braking events.", "sample": null},
+  {"name": "Hebart2023ThingsMeg", "modality": "meg", "subjects": 4, "total_hours": 40, "aliases": "THINGS-MEG1", "description": "THINGS-data: MEG recordings from 4 participants viewing 1,854 diverse object concepts.", "sample": null},
+  {"name": "Hinss2021Open", "modality": "eeg", "subjects": 15, "total_hours": null, "aliases": "Hinss2021", "description": "EEG recordings (64-ch) in 15 healthy participants while performing cognitive workload tasks (N-Back, MATB-II multi-tasking, vigilance, and Flanker).", "sample": null},
+  {"name": "Hinss2023Open", "modality": "eeg", "subjects": 29, "total_hours": 100, "aliases": "COG-BCI", "description": "EEG recordings from 29 participants over 3 sessions performing cognitive tasks (PVT, Flanker, N-back, MATB), totaling over 100 hours of EEG and ECG data.", "sample": null},
+  {"name": "Hoffmann2008Efficient", "modality": "eeg", "subjects": 8, "total_hours": null, "aliases": "EPFLP300", "description": "EEG recordings (32-ch) in 8 participants (healthy and motor-disabled) while performing a P300 BCI task with six visual stimulus categories.", "sample": null},
+  {"name": "Hohne2011Novel", "modality": "eeg", "subjects": 10, "total_hours": null, "aliases": "BNCI2015_012", "description": "EEG recordings (63-ch) in 10 healthy participants while attending to auditory stimuli varying in pitch and direction in a 9-class PASS2D P300 speller.", "sample": null},
+  {"name": "Hollenstein2018Zuco", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "Zurich Cognitive Language Processing Corpus", "description": "EEG recordings of 12 participants reading natural text in English.", "sample": null},
+  {"name": "Hubner2016Eeg", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "Huebner2018", "description": "EEG recordings (15-ch) in 12 healthy participants while performing a visual P300 matrix speller task with unsupervised label-proportion learning.", "sample": null},
+  {"name": "Hubner2017Learning", "modality": "eeg", "subjects": 13, "total_hours": null, "aliases": "Huebner2017", "description": "EEG recordings (29-ch) in 13 healthy participants while copy-spelling with a visual P300 matrix speller (6x7 grid).", "sample": null},
+  {"name": "Jao2023Eeg", "modality": "eeg", "subjects": 13, "total_hours": null, "aliases": "BNCI2022_001", "description": "EEG recordings (64-ch) in 13 participants while piloting a simulated drone through waypoints at varying difficulty levels.", "sample": null},
+  {"name": "Kalunga2016Online", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "Kalunga2016", "description": "EEG recordings (8-ch) in 12 healthy participants while fixating on flickering visual stimuli in a 4-class SSVEP exoskeleton BCI task.", "sample": null},
+  {"name": "Kappenman2021ErpErn", "modality": "eeg", "subjects": 40, "total_hours": null, "aliases": "ErpCore2021_ERN", "description": "EEG recordings in 40 healthy participants while performing a flanker task eliciting error-related negativity (ERN) responses.", "sample": null},
+  {"name": "Kappenman2021ErpLrp", "modality": "eeg", "subjects": 40, "total_hours": null, "aliases": "ErpCore2021_LRP", "description": "EEG recordings in 40 healthy participants while performing a flanker task eliciting lateralized readiness potentials (LRP).", "sample": null},
+  {"name": "Kappenman2021ErpMmn", "modality": "eeg", "subjects": 40, "total_hours": null, "aliases": "ErpCore2021_MMN", "description": "EEG recordings in 40 healthy participants while listening to auditory oddball tone sequences eliciting mismatch negativity (MMN).", "sample": null},
+  {"name": "Kappenman2021ErpN170", "modality": "eeg", "subjects": 40, "total_hours": null, "aliases": "ErpCore2021_N170", "description": "EEG recordings in 40 healthy participants while viewing faces and objects to elicit N170 face-selective potentials.", "sample": null},
+  {"name": "Kappenman2021ErpN2pc", "modality": "eeg", "subjects": 40, "total_hours": null, "aliases": "ErpCore2021_N2pc", "description": "EEG recordings in 40 healthy participants while performing a visual search task eliciting N2pc attention-related potentials.", "sample": null},
+  {"name": "Kappenman2021ErpN400", "modality": "eeg", "subjects": 40, "total_hours": null, "aliases": "ErpCore2021_N400", "description": "EEG recordings in 40 healthy participants while reading word pairs to elicit N400 semantic incongruity potentials.", "sample": null},
+  {"name": "Kappenman2021ErpP3", "modality": "eeg", "subjects": 40, "total_hours": null, "aliases": "ErpCore2021_P3", "description": "EEG recordings in 40 healthy participants while performing a visual oddball task eliciting P300 potentials.", "sample": null},
+  {"name": "Kemp2000Analysis", "modality": "eeg", "subjects": 78, "total_hours": null, "aliases": "Sleep-EDF Cassette Dataset", "description": "Ambulatory EEG recordings over 48-hr period for 82 participants to study effects of aging on sleep.", "sample": null},
+  {"name": "Kojima2024ReplicationA", "modality": "eeg", "subjects": 11, "total_hours": null, "aliases": "Kojima2024A", "description": "EEG recordings (64-ch) in 11 healthy participants while selectively attending to target tones among multiple auditory streams in a P300 BCI.", "sample": null},
+  {"name": "Kojima2024ReplicationB", "modality": "eeg", "subjects": 15, "total_hours": null, "aliases": "Kojima2024B", "description": "EEG recordings (64-ch) in 15 healthy participants while performing a four-class auditory selective-attention BCI task.", "sample": null},
+  {"name": "Korczowski2019BrainBi2014A", "modality": "eeg", "subjects": 64, "total_hours": null, "aliases": "BI2014a", "description": "EEG recordings (16-ch) in 64 healthy participants while playing a P300-based Brain Invaders game with 36 symbols and calibration-less dry electrodes.", "sample": null},
+  {"name": "Korczowski2019BrainBi2014B", "modality": "eeg", "subjects": 38, "total_hours": null, "aliases": "BI2014b", "description": "EEG recordings (32-ch) in 38 healthy participants while playing a cooperative/competitive multi-user P300 Brain Invaders game.", "sample": null},
+  {"name": "Korczowski2019BrainBi2015A", "modality": "eeg", "subjects": 43, "total_hours": null, "aliases": "BI2015a", "description": "EEG recordings (32-ch) in 43 healthy participants while playing a P300 Brain Invaders game with modulated flash duration.", "sample": null},
+  {"name": "Korczowski2019BrainBi2015B", "modality": "eeg", "subjects": 44, "total_hours": null, "aliases": "BI2015b", "description": "EEG recordings (32-ch) in 44 healthy participants while playing a cooperative/competitive multi-user P300 Brain Invaders game.", "sample": null},
+  {"name": "Kueper2024Eeg", "modality": "eeg", "subjects": 8, "total_hours": null, "aliases": "Intrinsic Error Evaluation during Human-Robot Interaction", "description": "This dataset contains recordings of the electroencephalogram (EEG) data from eight participants who were assisted in moving their right arm by an active orthosis. The orthosis-supported movements were elbow joint movements, i.e., flexion and extension of the right arm. While the orthosis was actively moving the participant's arm, some errors were deliberately introduced for a short duration of time. During this time, the orthosis moved in the opposite direction. The errors are very simple and easy to detect.", "sample": null},
+  {"name": "Lee2019EegErp", "modality": "eeg", "subjects": 54, "total_hours": null, "aliases": "Lee2019_ERP", "description": "EEG recordings (62-ch) in 54 healthy participants while performing a 36-character P300 row-column speller with face-overlay stimuli.", "sample": null},
+  {"name": "Lee2019EegMi", "modality": "eeg", "subjects": 54, "total_hours": null, "aliases": "Lee2019_MI", "description": "EEG recordings (62-ch) in 54 healthy participants while performing left- and right-hand motor imagery.", "sample": null},
+  {"name": "Lee2019EegSsvep", "modality": "eeg", "subjects": 54, "total_hours": null, "aliases": "Lee2019_SSVEP", "description": "EEG recordings (62-ch) in 54 healthy participants while fixating on SSVEP targets at four frequencies (5.45, 6.67, 8.57, 12 Hz).", "sample": null},
+  {"name": "Leeb2007Brain", "modality": "eeg", "subjects": 9, "total_hours": null, "aliases": "BNCI2014_004", "description": "EEG recordings (22-ch) in 9 healthy participants while performing four-class motor imagery (left hand, right hand, feet, tongue).", "sample": null},
+  {"name": "Li2022Petit", "modality": "fmri", "subjects": 112, "total_hours": 175, "aliases": "Le Petit Prince fMRI Corpus", "description": "Le Petit Prince fMRI Corpus: 3T fMRI recordings from 112 participants listening to 'The Little Prince' audiobook in their native language (French, English, Chinese).", "sample": "Li2022PetitSample"},
+  {"name": "Liu2024Eeg", "modality": "eeg", "subjects": 50, "total_hours": null, "aliases": "Liu2024", "description": "EEG recordings (30-ch) in 50 participants with acute stroke while imagining grasping a spherical object with the left or right hand.", "sample": null},
+  {"name": "Liu2024Eeg2video", "modality": "eeg", "subjects": 20, "total_hours": null, "aliases": "SJTU Emotion EEG Dataset DV", "description": "EEG recordings of 20 participants viewing 1,400 video clips (2s) for 40 concepts", "sample": null},
+  {"name": "Lopez2017Tuab", "modality": "eeg", "subjects": 2329, "total_hours": null, "aliases": "TUAB", "description": "Subset of TUH EEG with labels for normal / abnormal recordings", "sample": null},
+  {"name": "MartinezCagigal2023Dataset", "modality": "eeg", "subjects": 16, "total_hours": null, "aliases": "MartinezCagigal2023Checker", "description": "EEG recordings in 16 healthy participants while performing a checkerboard m-sequence c-VEP BCI speller task.", "sample": null},
+  {"name": "MartinezCagigal2024Dataset", "modality": "eeg", "subjects": 15, "total_hours": null, "aliases": "MartinezCagigal2023Pary", "description": "EEG recordings in 16 healthy participants while performing a non-binary (p-ary) m-sequence c-VEP BCI speller task.", "sample": null},
+  {"name": "Miltiadous2023Dice", "modality": "eeg", "subjects": 88, "total_hours": null, "aliases": "", "description": "EEG resting state-closed eyes recordings from 88 participants in total, with Alzheimer's disease, dementia and healthy controls.", "sample": "Miltiadous2023DiceSample"},
+  {"name": "Mumtaz2018Machine", "modality": "eeg", "subjects": 64, "total_hours": null, "aliases": "", "description": "MDD Patients and Healthy Controls EEG Data", "sample": null},
+  {"name": "Nakanishi2015Comparison", "modality": "eeg", "subjects": 9, "total_hours": null, "aliases": "Nakanishi2015", "description": "EEG recordings (8-ch) in 9 healthy participants while fixating on flickering stimuli in a 12-class SSVEP target identification task.", "sample": null},
+  {"name": "Nieuwland2018Large", "modality": "eeg", "subjects": 295, "total_hours": null, "aliases": "", "description": "EEG recordings from 334 participants across 9 laboratories reading sentences in RSVP to test phonological predictions.", "sample": null},
+  {"name": "Obeid2016Tueg", "modality": "eeg", "subjects": 14987, "total_hours": null, "aliases": "TUEG", "description": "Superset TUH EEG with EEG for all participants without labels or annotations", "sample": null},
+  {"name": "Ofner2017Upper", "modality": "eeg", "subjects": 15, "total_hours": null, "aliases": "Ofner2017", "description": "EEG recordings (61-ch) in 15 healthy participants while performing and imagining upper-limb movements (elbow, forearm, hand open/close).", "sample": null},
+  {"name": "Ofner2017UpperExecution", "modality": "eeg", "subjects": 15, "total_hours": null, "aliases": "Ofner2017", "description": "EEG recordings (61-ch) in 15 healthy participants while executing upper-limb movements (elbow, forearm, hand open/close).", "sample": null},
+  {"name": "Ofner2019Attempted", "modality": "eeg", "subjects": 10, "total_hours": null, "aliases": "BNCI2019_001", "description": "EEG recordings (61-ch) in 10 participants with spinal cord injury while attempting arm and hand movements.", "sample": null},
+  {"name": "Oikonomou2016ComparativeA", "modality": "eeg", "subjects": 11, "total_hours": null, "aliases": "MAMEM1", "description": "EEG recordings (256-ch) in 11 healthy participants while fixating on flickering visual stimuli in a 5-class SSVEP task.", "sample": null},
+  {"name": "Oikonomou2016ComparativeB", "modality": "eeg", "subjects": 11, "total_hours": null, "aliases": "MAMEM2", "description": "EEG recordings (256-ch) in 11 healthy participants while fixating on simultaneously presented flickering stimuli in a 5-class SSVEP task.", "sample": null},
+  {"name": "Oikonomou2016ComparativeC", "modality": "eeg", "subjects": 11, "total_hours": null, "aliases": "MAMEM3", "description": "EEG recordings (14-ch) in 11 healthy participants while fixating on simultaneously presented flickering stimuli in a 5-class SSVEP task.", "sample": null},
+  {"name": "Pulferer2022Continuous", "modality": "eeg", "subjects": 10, "total_hours": null, "aliases": "BNCI2025_002", "description": "EEG recordings (60-ch) in 10 healthy participants while attempting continuous 2D reaching movements with trajectory visual feedback.", "sample": null},
+  {"name": "Reichert2020Impact", "modality": "eeg", "subjects": 18, "total_hours": null, "aliases": "BNCI2020_002", "description": "EEG recordings (30-ch) in 18 healthy participants while performing a covert spatial attention N2pc task to answer yes/no questions.", "sample": null},
+  {"name": "Riccio2013Attention", "modality": "eeg", "subjects": 8, "total_hours": null, "aliases": "BNCI2014_008", "description": "EEG recordings (8-ch) in 8 participants with ALS while performing a visual P300 BCI speller task.", "sample": null},
+  {"name": "Romani2025Brainform", "modality": "eeg", "subjects": 22, "total_hours": null, "aliases": "RomaniBF2025ERP", "description": "EEG recordings (8-ch) in 22 healthy participants while playing a BrainForm serious-game P300 speller.", "sample": null},
+  {"name": "Schaeff2012Exploring", "modality": "eeg", "subjects": 16, "total_hours": null, "aliases": "BNCI2015_007", "description": "EEG recordings (64-ch) in 16 healthy participants while performing a gaze-independent motion-onset VEP (mVEP) P300 speller task.", "sample": null},
+  {"name": "Schalk2004Bci2000", "modality": "eeg", "subjects": 109, "total_hours": null, "aliases": "EEG Motor Movement/Imagery Dataset", "description": "Corpus of 1,526 EEG recordings (1-2 mins) from 109 participants performing motor and imagery tasks.", "sample": null},
+  {"name": "Schalk2004Bci2000Moabb", "modality": "eeg", "subjects": 109, "total_hours": null, "aliases": "PhysionetMI", "description": "EEG recordings (16-ch) in 109 healthy participants while performing and imagining hand and feet movements for BCI cursor control.", "sample": null},
+  {"name": "Scherer2012Brain", "modality": "eeg", "subjects": 14, "total_hours": null, "aliases": "BNCI2014_002", "description": "EEG recordings (32-ch) in 14 healthy participants while performing right-hand and feet motor imagery with auditory cues.", "sample": null},
+  {"name": "Scherer2015Individually", "modality": "eeg", "subjects": 9, "total_hours": null, "aliases": "BNCI2015_004", "description": "EEG recordings (30-ch) in 9 healthy participants while performing five mental tasks (math, letter, rotation, count, baseline).", "sample": null},
+  {"name": "Schirrmeister2017Deep", "modality": "eeg", "subjects": 14, "total_hours": null, "aliases": "Schirrmeister2017", "description": "EEG recordings (128-ch) in 14 healthy participants while performing executed movements (left hand, right hand, feet, rest).", "sample": null},
+  {"name": "Schreuder2010New", "modality": "eeg", "subjects": 21, "total_hours": null, "aliases": "BNCI2015_009", "description": "EEG recordings (20-ch) in 21 healthy participants while attending to spatial auditory cues in a multi-class AMUSE ERP paradigm.", "sample": null},
+  {"name": "Schwarz2020Analyzing", "modality": "eeg", "subjects": 45, "total_hours": null, "aliases": "BNCI2020_001", "description": "EEG recordings (58-ch) in 45 healthy participants while performing reach-and-grasp motor imagery comparing gel, water, and dry EEG electrode systems.", "sample": null},
+  {"name": "Shah2018Tusz", "modality": "eeg", "subjects": 675, "total_hours": null, "aliases": "TUSZ", "description": "Subset of TUH EEG with extensive annotations of seizure (start/duration) per-channel.", "sample": null},
+  {"name": "Shin2017OpenA", "modality": "eeg", "subjects": 29, "total_hours": null, "aliases": "Shin2017A", "description": "EEG recordings (30-ch) in 29 healthy participants while performing left- and right-hand motor imagery (opening/closing hands).", "sample": null},
+  {"name": "Shin2017OpenB", "modality": "eeg", "subjects": 29, "total_hours": null, "aliases": "Shin2017B", "description": "EEG recordings (30-ch) in 29 healthy participants while performing mental arithmetic (serial subtraction) versus resting baseline.", "sample": null},
+  {"name": "Shirazi2024Hbn", "modality": "eeg", "subjects": 3146, "total_hours": null, "aliases": "Healthy Brain Network EEG", "description": "Large-scale set of EEG recordings from young participants (ages 5-21) during 6 cognitive tasks", "sample": null},
+  {"name": "Singh2021Timing", "modality": "eeg", "subjects": 129, "total_hours": null, "aliases": "", "description": "EEG recordings in 83 Parkinson's disease patients and 37 controls during interval timing.", "sample": null},
+  {"name": "Sosulski2019Electroencephalogram", "modality": "eeg", "subjects": 13, "total_hours": null, "aliases": "Sosulski2019", "description": "EEG recordings (31-ch) in 13 healthy participants while attending to target tones (1000 Hz) in an auditory oddball P300 paradigm.", "sample": null},
+  {"name": "Srisrisawang2024Simultaneous", "modality": "eeg", "subjects": 20, "total_hours": null, "aliases": "BNCI2025_001", "description": "EEG recordings (60-ch) in 20 healthy participants while performing discrete reaching movements in four directions at varying speeds and distances.", "sample": null},
+  {"name": "Stieger2021Continuous", "modality": "eeg", "subjects": 62, "total_hours": null, "aliases": "Stieger2021", "description": "EEG recordings (64-ch) in 62 healthy participants while performing motor imagery for cursor control with continuous online visual feedback.", "sample": null},
+  {"name": "Tangermann2012Review", "modality": "eeg", "subjects": 9, "total_hours": null, "aliases": "BNCI2014_001", "description": "EEG recordings (22-ch) in 9 healthy participants while performing four-class motor imagery (left hand, right hand, feet, tongue).", "sample": null},
+  {"name": "Thielen2015Broad", "modality": "eeg", "subjects": 12, "total_hours": null, "aliases": "Thielen2015", "description": "EEG recordings (64-ch) in 12 healthy participants while performing a 6x6 matrix c-VEP BCI speller task using modulated Gold codes.", "sample": null},
+  {"name": "Thielen2021From", "modality": "eeg", "subjects": 30, "total_hours": null, "aliases": "Thielen2021", "description": "EEG recordings (8-ch) in 30 healthy participants while performing a code-modulated VEP (c-VEP) calculator BCI speller with pseudo-random sequences.", "sample": null},
+  {"name": "Treder2011Gaze", "modality": "eeg", "subjects": 13, "total_hours": null, "aliases": "BNCI2015_008", "description": "EEG recordings (64-ch) in 13 healthy participants while performing a gaze-independent center-speller P300 task with sequential geometric shapes.", "sample": null},
+  {"name": "Treder2014Decoding", "modality": "eeg", "subjects": 11, "total_hours": null, "aliases": "BNCI2015_006", "description": "EEG recordings (64-ch) in 11 healthy participants while selectively attending to individual instruments in polyphonic music in an auditory BCI task.", "sample": null},
+  {"name": "Vaineau2018Brain", "modality": "eeg", "subjects": 24, "total_hours": null, "aliases": "BI2013a", "description": "EEG recordings (16-ch) in 24 healthy participants while playing a P300-based Brain Invaders video game with 36 flashing symbols.", "sample": null},
+  {"name": "VanVeen2019Building", "modality": "eeg", "subjects": 25, "total_hours": null, "aliases": "BI2012", "description": "EEG recordings (16-ch) in 25 healthy participants while playing a P300-based Brain Invaders video game.", "sample": null},
+  {"name": "Veloso2017Tuep", "modality": "eeg", "subjects": 200, "total_hours": null, "aliases": "TUEP", "description": "Subset of TUH EEG with labels no epilepsy / epilepsy recordings", "sample": null},
+  {"name": "VonWeltin2017Tusl", "modality": "eeg", "subjects": 38, "total_hours": null, "aliases": "TUSL", "description": "Subset of TUH EEG with annotations for slowing events", "sample": null},
+  {"name": "Wang2017Benchmark", "modality": "eeg", "subjects": 34, "total_hours": null, "aliases": "Wang2016", "description": "EEG recordings (64-ch) in 34 healthy participants while fixating on targets in a 40-class SSVEP speller using joint frequency-phase modulation.", "sample": null},
+  {"name": "Wei2022BeetlA", "modality": "eeg", "subjects": 3, "total_hours": null, "aliases": "Beetl2021_A", "description": "EEG recordings (63-ch) in 3 participants while performing motor imagery for the BEETL NeurIPS 2021 transfer-learning competition.", "sample": null},
+  {"name": "Wei2022BeetlB", "modality": "eeg", "subjects": 2, "total_hours": null, "aliases": "Beetl2021_B", "description": "EEG recordings (32-ch) in 2 participants while performing motor imagery for the BEETL NeurIPS 2021 transfer-learning competition.", "sample": null},
+  {"name": "Yi2014Evaluation", "modality": "eeg", "subjects": 10, "total_hours": null, "aliases": "Weibo2014", "description": "EEG recordings (21-ch) in 10 healthy participants while performing simple (single-limb) and compound (multi-limb) motor imagery.", "sample": null},
+  {"name": "Zhou2016Fully", "modality": "eeg", "subjects": 4, "total_hours": null, "aliases": "Zhou2016", "description": "EEG recordings (9-ch) in 4 healthy participants while performing three-class motor imagery (left hand, right hand, feet).", "sample": null},
+  {"name": "Zyma2019Electroencephalograms", "modality": "eeg", "subjects": 35, "total_hours": null, "aliases": "EEG Mental Arithmetic Tasks", "description": "EEG recordings from 35 participants performing mental arithmetic (serial subtraction).", "sample": null}
+];
+</script>
+<div class="explore-datasets-section">
+  <div class="modality-selector">
+    <button class="explore-modality-btn active" data-modality="all">📊 All</button>
+    <button class="explore-modality-btn" data-modality="eeg">🧠 EEG</button>
+    <button class="explore-modality-btn" data-modality="meg">🔬 MEG</button>
+    <button class="explore-modality-btn" data-modality="fmri">🔴 fMRI</button>
+    <button class="explore-modality-btn" data-modality="ieeg">⚡ iEEG</button>
+    <button class="explore-modality-btn" data-modality="emg">💪 EMG</button>
+    <button class="explore-modality-btn" data-modality="fnirs">💡 fNIRS</button>
+  </div>
+  <div id="datasetsTable"></div>
+</div>
+
+<script>
+(function () {
+  var ALL = window.EXPLORE_DATASETS || [];
+  var MODALITIES = ['eeg', 'meg', 'fmri', 'ieeg', 'emg', 'fnirs'];
+  var studiesData = { all: ALL };
+  MODALITIES.forEach(function (m) {
+    studiesData[m] = ALL.filter(function (d) { return d.modality === m; });
+  });
+  ALL.forEach(function (d) {
+    d.hrs_per_subject = (d.total_hours !== null && d.subjects)
+      ? parseFloat((d.total_hours / d.subjects).toFixed(1)) : null;
+    // Collapse whitespace runs so multi-line `description` ClassVars
+    // don't break the table layout.
+    d.description = (d.description || '').replace(/\s+/g, ' ').trim();
+  });
+
+  var EMOJI = { meg: '🔬', fmri: '🔴', eeg: '🧠', ieeg: '⚡', emg: '💪', fnirs: '💡' };
+  var sortBy = 'name';
+  var sortAsc = true;
+  var currentModality = 'all';
+
+  function cmp(a, b) {
+    // Nulls always sort last, regardless of direction.
+    if (a === null && b === null) return 0;
+    if (a === null) return 1;
+    if (b === null) return -1;
+    if (typeof a === 'string') { a = a.toLowerCase(); b = b.toLowerCase(); }
+    if (sortAsc) { return a < b ? -1 : a > b ? 1 : 0; }
+    return a > b ? -1 : a < b ? 1 : 0;
+  }
+
+  function sortDatasets(list, col) {
+    return list.slice().sort(function (x, y) { return cmp(x[col], y[col]); });
+  }
+
+  function indicator(col) { return sortBy === col ? (sortAsc ? ' &#8593;' : ' &#8595;') : ''; }
+  function fmtNum(v) { return v === null ? '\u2014' : v.toLocaleString(); }
+  function fmtRaw(v) { return v === null ? '\u2014' : v; }
+
+  function renderTable(modality) {
+    currentModality = modality;
+    var list = studiesData[modality] || ALL;
+    var el = document.getElementById('datasetsTable');
+    if (!list.length) {
+      el.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--color-foreground-muted)">No dataset yet for this modality.</p>';
+      return;
+    }
+    var sorted = sortDatasets(list, sortBy);
+    var MAX_DESC = 180;
+    function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;'); }
+    var rows = sorted.map(function (d) {
+      var badge = d.sample ? ' <span class="explore-sample-badge">&#9654; sample</span>' : '';
+      var desc = d.description || '';
+      var descCell = desc.length > MAX_DESC
+        ? '<span title="' + escAttr(desc) + '">' + desc.slice(0, MAX_DESC).trimEnd() + '\u2026</span>'
+        : desc;
+      if (d.aliases) {
+        descCell += '<div class="explore-aliases">a.k.a. <em>' + d.aliases + '</em></div>';
+      }
+      return '<tr>'
+        + '<td><strong>' + (EMOJI[d.modality] || '') + ' ' + d.name + '</strong>' + badge + '</td>'
+        + '<td>' + d.modality.toUpperCase() + '</td>'
+        + '<td>' + fmtNum(d.subjects) + '</td>'
+        + '<td>' + fmtRaw(d.total_hours) + '</td>'
+        + '<td>' + fmtRaw(d.hrs_per_subject) + '</td>'
+        + '<td>' + descCell + '</td>'
+        + '</tr>';
+    }).join('');
+    el.innerHTML = '<table class="datasets-table"><thead><tr>'
+      + '<th class="sortable" data-col="name">Dataset' + indicator('name') + '</th>'
+      + '<th>Modality</th>'
+      + '<th class="sortable" data-col="subjects">Subjects' + indicator('subjects') + '</th>'
+      + '<th class="sortable" data-col="total_hours">Hours' + indicator('total_hours') + '</th>'
+      + '<th class="sortable" data-col="hrs_per_subject">Hrs/subj' + indicator('hrs_per_subject') + '</th>'
+      + '<th>Description</th>'
+      + '</tr></thead><tbody>' + rows + '</tbody></table>';
+    el.querySelectorAll('.sortable').forEach(function (th) {
+      th.addEventListener('click', function () {
+        var col = th.dataset.col;
+        if (sortBy === col) { sortAsc = !sortAsc; } else { sortBy = col; sortAsc = true; }
+        renderTable(currentModality);
+      });
+    });
+  }
+
+  document.querySelectorAll('.explore-modality-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.explore-modality-btn').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderTable(btn.dataset.modality);
+    });
+  });
+
+  renderTable('all');
+})();
+</script>
+
+<style>
+.explore-sample-badge {
+  display: inline-block;
+  margin-left: .35rem;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: .1rem .4rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, #22c55e 15%, transparent);
+  color: color-mix(in srgb, #15803d 70%, var(--color-foreground-primary));
+  vertical-align: middle;
+}
+</style><section id="download-a-dataset">
+<h2>Download a Dataset<a class="headerlink" href="#download-a-dataset" title="Link to this heading">¶</a></h2>
+<p>Pass any study name to <code class="docutils literal notranslate"><span class="pre">ns.Study</span></code> to download and load it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">neuralset</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ns</span>
+
+<span class="n">study</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">Study</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Grootswagers2022Human&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;./data&quot;</span><span class="p">)</span>
+<span class="n">study</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>       <span class="c1"># fetch raw files from source repository</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>   <span class="c1"># returns a tidy events DataFrame</span>
+</pre></div>
+</div>
+<p>Datasets marked <strong>▶ sample</strong> have a lightweight variant you can run
+immediately without downloading the full dataset:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">neuralset</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ns</span>
+
+<span class="n">study</span> <span class="o">=</span> <span class="n">ns</span><span class="o">.</span><span class="n">Study</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Grootswagers2022HumanSample&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;./data&quot;</span><span class="p">)</span>
+<span class="n">study</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>       <span class="c1"># downloads a small subset</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>   <span class="c1"># returns a tidy events DataFrame</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="samples.html"><span class="doc">Sample Datasets</span></a> for all sample datasets with ready-to-paste snippets,
+or <a class="reference internal" href="reference/reference.html"><span class="doc">API Reference</span></a> for the full API reference.</p>
+<div class="page-nav">
+  <a href="auto_examples/index.html" class="page-nav-btn page-nav-btn--outline">&larr; Tutorials</a>
+  <a href="samples.html" class="page-nav-btn">Sample Datasets &rarr;</a>
+</div></section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="samples.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Sample Datasets</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="auto_examples/03_create_new_study.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Creating Your Own Study</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; Meta Platforms, Inc. and affiliates
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fa-brands fa-solid fa-github fa-2x" href="https://github.com/facebookresearch/neuroai" aria-label="GitHub"></a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Explore Brain Datasets</a><ul>
+<li><a class="reference internal" href="#download-a-dataset">Download a Dataset</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=4ea706d9"></script>
+    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/pipeline-accordion.js?v=3528a9e4"></script>
+    <script src="../_static/vendor/prism/prism.min.js?v=8a092781"></script>
+    <script src="../_static/vendor/prism/prism-python.min.js?v=f21961cb"></script>
+    <script src="../_static/vendor/prism/prism-bash.min.js?v=d3c2adab"></script>
+    <script src="../_static/code-highlight.js?v=8094870f"></script>
+    <script src="../_static/code-builder-data.js?v=90585cd7"></script>
+    <script src="../_static/code-builder.js?v=05bd8351"></script>
+    <script src="../_static/quickstart-axes.js?v=cd51247d"></script>
+    <script src="../_static/sidebar-nav.js?v=d2ace3ea"></script>
+    <script src="../_static/neuralbench-results-table.js?v=2be6bbae"></script>
+    </body>
+</html>
