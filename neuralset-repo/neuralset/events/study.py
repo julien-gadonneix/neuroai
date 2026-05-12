@@ -396,8 +396,8 @@ class Study(base.Step):
             raise RuntimeError(f"Directory is empty: {self.path}")
         logger.info(f"Success: Study downloaded to {self.path}.")
         _set_dir_permissions(self.path)
-        if hasattr(base.Step, "query"):  # exca >=0.5.24
-            base.Step.query(self).clear_cache()  # type: ignore[attr-defined]
+        if hasattr(base.Step, "lookup"):  # exca >=0.5.24
+            self.lookup().clear_cache()  # type: ignore[attr-defined]
         else:
             self.clear_cache()  # type: ignore
 
