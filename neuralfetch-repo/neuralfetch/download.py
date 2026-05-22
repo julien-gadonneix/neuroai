@@ -801,8 +801,7 @@ class Dryad(BaseDownload):
                 continue
             print(f"  [{i}/{len(files)}] Downloading {name}...")
             digest_type = f.get("digestType", "")
-            if digest_type == "sha-256":
-                digest_type = "sha256"
+            digest_type = digest_type.replace("-", "") # sha-256 -> sha256
             digest = f.get("digest", "")
             file_hash = f"{digest_type}:{digest}" if digest and digest_type else None
             download_file(
