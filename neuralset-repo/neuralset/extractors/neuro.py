@@ -688,13 +688,17 @@ class IeegExtractor(MneRaw):
 
 
 class SpikesExtractor(BaseExtractor):
-    """Feature extractor for spike data stored in HDF5/NWB files.
+    """Feature extractor for spike data in HDF5/NWB or pre-binned MNE format.
 
-    Reads spike times from HDF5 files and creates a dense binned array
-    of shape (n_units, n_time_bins) at the specified frequency.
+    Supports two input formats returned by :meth:`~neuralset.events.etypes.Spikes.read`:
+
+    - **NWB/HDF5** (``h5py.File``): spike times are binned into a dense array
+      of shape ``(n_units, n_time_bins)`` at the target frequency.
+    - **MNE** (``mne.io.RawArray``): pre-binned continuous data; resampled with
+      :meth:`mne.io.Raw.resample` when ``raw.info["sfreq"]`` differs from ``frequency``.
 
     The preprocessing steps, if specified, are ordered as follows:
-    1. Spike binning at target frequency
+    1. Spike binning or resampling to target frequency
     2. Scaling
     3. Baseline correction (applied on segments)
     4. Clamp (applied on segments)
@@ -702,8 +706,8 @@ class SpikesExtractor(BaseExtractor):
     Parameters
     ----------
     frequency : "native" or float, default="native"
-        Target sampling frequency for spike binning. If ``"native"``, uses the
-        frequency declared in the Spikes event.
+        Target sampling frequency (Hz). If ``"native"``, uses the frequency
+        declared in the Spikes event (NWB) or ``raw.info["sfreq"]`` (MNE).
     offset : float, default=0.0
         Time offset (in seconds) applied to the segment window.
     baseline : tuple of float, optional
@@ -813,34 +817,6 @@ class SpikesExtractor(BaseExtractor):
 
         return data, [str(n) for n in ch_names]
 
-    @staticmethod
-    def _resample_spike_data(
-        data: np.ndarray, orig_sfreq: float, new_sfreq: float
-    ) -> np.ndarray:
-        n_timestamps = data.shape[-1]
-        timestamps = np.arange(n_timestamps) / orig_sfreq
-        new_timestamps = np.arange(
-            0, timestamps[-1] + (1 / orig_sfreq) - (1 / new_sfreq), 1 / new_sfreq
-        )
-        resamp_data = np.stack(
-            [
-                np.interp(new_timestamps, timestamps, unit, right=unit[-1])
-                for unit in data
-            ],
-            axis=0,
-        )
-        # Evaluate how many timestamps were dropped at the end because of no extrapolation
-        n_new_timestamps_without_extrapolation = int(timestamps[-1] * new_sfreq) + 1
-        dropped_timestamps = len(new_timestamps) - n_new_timestamps_without_extrapolation
-        if dropped_timestamps > 0:
-            msg = (
-                f"{dropped_timestamps} invalid timestamps at the end of the timeline due to resampling without"
-                f" interpolation from f={orig_sfreq:0.2f}Hz to f={new_sfreq:0.2f}Hz. These invalid timestamps "
-                "have been filled with NaNs."
-            )
-            logger.warning(msg)
-        return resamp_data
-
     def _preprocess_spikes(self, event: etypes.Spikes) -> TimedArray:
         import h5py  # type: ignore[import-untyped]
 
@@ -856,11 +832,15 @@ class SpikesExtractor(BaseExtractor):
             h5py_or_raw.close()
         elif isinstance(h5py_or_raw, mne.io.RawArray):
             raw = h5py_or_raw
-            data = raw.get_data()
             loaded_sfreq = float(raw.info["sfreq"])
             ch_names = raw.ch_names
             if loaded_sfreq != sfreq:
-                data = self._resample_spike_data(data, loaded_sfreq, sfreq)
+                # copy first — ``crop`` mutates in place, and ``super().read()``
+                # could return a cached/shared Raw (e.g. via ``_special_loader``).
+                raw = raw.copy()
+                raw.load_data()
+                raw = raw.resample(sfreq, verbose=False)
+            data = raw.get_data()
         else:
             raise ValueError(f"Unsupported spike data type: {type(h5py_or_raw)}")
 
