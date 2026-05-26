@@ -813,6 +813,34 @@ class SpikesExtractor(BaseExtractor):
 
         return data, [str(n) for n in ch_names]
 
+    @staticmethod
+    def _resample_spike_data(
+        data: np.ndarray, orig_sfreq: float, new_sfreq: float
+    ) -> np.ndarray:
+        n_timestamps = data.shape[-1]
+        timestamps = np.arange(n_timestamps) / orig_sfreq
+        new_timestamps = np.arange(
+            0, timestamps[-1] + (1 / orig_sfreq) - (1 / new_sfreq), 1 / new_sfreq
+        )
+        resamp_data = np.stack(
+            [
+                np.interp(new_timestamps, timestamps, unit, right=unit[-1])
+                for unit in data
+            ],
+            axis=0,
+        )
+        # Evaluate how many timestamps were dropped at the end because of no extrapolation
+        n_new_timestamps_without_extrapolation = int(timestamps[-1] * new_sfreq) + 1
+        dropped_timestamps = len(new_timestamps) - n_new_timestamps_without_extrapolation
+        if dropped_timestamps > 0:
+            msg = (
+                f"{dropped_timestamps} invalid timestamps at the end of the timeline due to resampling without"
+                f" interpolation from f={orig_sfreq:0.2f}Hz to f={new_sfreq:0.2f}Hz. These invalid timestamps "
+                "have been filled with NaNs."
+            )
+            logger.warning(msg)
+        return resamp_data
+
     def _preprocess_spikes(self, event: etypes.Spikes) -> TimedArray:
         import h5py  # type: ignore[import-untyped]
 
@@ -822,12 +850,19 @@ class SpikesExtractor(BaseExtractor):
             else float(self.frequency)
         )
 
-        nwb_file = event.read()
-        try:
-            data, ch_names = self._bin_spikes(nwb_file, sfreq)
-        finally:
-            if isinstance(nwb_file, h5py.File):
-                nwb_file.close()
+        h5py_or_raw = event.read()
+        if isinstance(h5py_or_raw, h5py.File):
+            data, ch_names = self._bin_spikes(h5py_or_raw, sfreq)
+            h5py_or_raw.close()
+        elif isinstance(h5py_or_raw, mne.io.RawArray):
+            raw = h5py_or_raw
+            data = raw.get_data()
+            loaded_sfreq = float(raw.info["sfreq"])
+            ch_names = raw.ch_names
+            if loaded_sfreq != sfreq:
+                data = self._resample_spike_data(data, loaded_sfreq, sfreq)
+        else:
+            raise ValueError(f"Unsupported spike data type: {type(h5py_or_raw)}")
 
         if self.scaler is not None:
             scaler_cls = getattr(sklearn.preprocessing, self.scaler)()
