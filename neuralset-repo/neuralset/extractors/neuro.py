@@ -835,9 +835,6 @@ class SpikesExtractor(BaseExtractor):
             loaded_sfreq = float(raw.info["sfreq"])
             ch_names = raw.ch_names
             if loaded_sfreq != sfreq:
-                # copy first — ``crop`` mutates in place, and ``super().read()``
-                # could return a cached/shared Raw (e.g. via ``_special_loader``).
-                raw = raw.copy()
                 raw.load_data()
                 raw = raw.resample(sfreq, verbose=False)
             data = raw.get_data()
